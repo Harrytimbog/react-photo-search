@@ -2,20 +2,15 @@ import React, { useState } from "react";
 import { createApi } from "unsplash-js";
 
 const unsplash = createApi({
-  accessKey: "MWgIgclHOy8TAZN9ooVUcQfS9nHtAnl_PwzpNCDuStM",
+  accessKey: process.env.REACT_APP_ACCESS_TOKEN,
 });
 
 export default function SearchPhotos() {
   const [query, setQuery] = useState("");
   const [pics, setPics] = useState([]);
-  console.log(pics);
-
-  // const client_id = "MWgIgclHOy8TAZN9ooVUcQfS9nHtAnl_PwzpNCDuStM";
-  // const fetchUrl = `https://api.unsplash.com/search/photos?client_id=${client_id}&query=${query}`;
 
   const searchPhotos = async (e) => {
     e.preventDefault();
-    console.log("Submitting the Form");
     unsplash.search
       .getPhotos({
         query: query,
@@ -25,9 +20,6 @@ export default function SearchPhotos() {
         setPics(result.response.results);
       });
   };
-
-  console.log(query);
-  console.log(pics);
 
   return (
     <>
