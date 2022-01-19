@@ -7,6 +7,8 @@ const unsplash = createApi({
 
 export default function SearchPhotos() {
   const [query, setQuery] = useState("");
+  const [pics, setPics] = useState([]);
+  console.log(pics);
 
   // const client_id = "MWgIgclHOy8TAZN9ooVUcQfS9nHtAnl_PwzpNCDuStM";
   // const fetchUrl = `https://api.unsplash.com/search/photos?client_id=${client_id}&query=${query}`;
@@ -19,11 +21,13 @@ export default function SearchPhotos() {
         query: query,
       })
       .then((result) => {
-        console.log(result);
+        console.log(result.response.results);
+        setPics(result.response.results);
       });
   };
 
   console.log(query);
+  console.log(pics);
 
   return (
     <>
@@ -44,6 +48,19 @@ export default function SearchPhotos() {
           Search
         </button>
       </form>
+      <div className="card-list">
+        {pics.map((pic) => (
+          <div className="card" key={pic.id}>
+            <img
+              className="card--image"
+              alt={pic.alt_description}
+              src={pic.urls.full}
+              width="50%"
+              height="50%"
+            ></img>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
